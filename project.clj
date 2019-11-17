@@ -14,6 +14,9 @@
                  [potemkin "0.4.5"]
                  ; lake.mq
                  [overtone/at-at "1.2.0"]]
+  :deploy-repositories [["github" {:url "https://maven.pkg.github.com/piperswe"
+                                   :username "piperswe"
+                                   :password :env/github_token}]]
   :repl-options {:init-ns lake.core}
   :main lake.core
   :profiles {:uberjar {:aot :all}})
