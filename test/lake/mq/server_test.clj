@@ -60,10 +60,10 @@
         (let [command (push-command :mq :db-queue)
               first-message {:timestamp (Timestamp. 0)
                              :channel   :channel
-                             :arguments `(:arg1 :arg2)}
+                             :arguments '(:arg1 :arg2)}
               second-message {:timestamp (Timestamp. 0)
                               :channel   :second-channel
-                              :arguments `(:an-arg [:another #{:arg}])}
+                              :arguments '(:an-arg [:another #{:arg}])}
               expected-first-result {:timestamp 0
                                      :channel   (name (:channel first-message))
                                      :arguments (->> first-message :arguments t/write (map char) (apply str))}
@@ -77,7 +77,33 @@
           (is (= @(s/take! stream) (:arguments first-message)))
           (is (= @(s/take! stream) (:arguments second-message)))
           (is (= (:call-args-list @add) `[(:db-queue ~expected-first-result) (:db-queue ~expected-second-result)]))
-          (is (= (:call-args-list @get-stream) `[(:mq :channel) (:mq :second-channel)])))))))
+          (is (= (:call-args-list @get-stream) '[(:mq :channel) (:mq :second-channel)])))))))
 
 (deftest pop-command-test
-  )
+  (let [stream (s/stream)]
+    (m/with-mock mock
+      {:target :lake.mq.server/get-channel-stream
+       :return stream}
+      (let [command (pop-command :mq)
+            first-message '(:arg1 :arg2)
+            second-message '(:arg3 :arg4)]
+        (testing "Gets existing messages from the queue"
+          (s/put! stream first-message)
+          (s/put! stream second-message)
+          (is (= @(command :channel) first-message))
+          (is (:call-args @mock) '(:mq :channel))
+          (is (:call-count @mock) 1)
+          (is (= @(command :channel) second-message))
+          (is (:call-args @mock) '(:mq :channel))
+          (is (:call-count @mock) 2))
+        (testing "Gets future messages from the queue"
+          (let [first-result (command :channel)
+                _ (is (:call-args @mock) '(:mq :channel))
+                _ (is (:call-count @mock) 3)
+                second-result (command :channel)
+                _ (is (:call-args @mock) '(:mq :channel))
+                _ (is (:call-count @mock) 4)]
+            (s/put! stream first-message)
+            (s/put! stream second-message)
+            (is (= @first-result first-message))
+            (is (= @second-result second-message))))))))
