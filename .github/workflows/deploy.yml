@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+env:
+  GITHUB_TOKEN: {{secrets.GITHUB_TOKEN}}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,5 +18,3 @@ jobs:
         run: lein test
       - name: Deploy
         run: lein deploy github
-        env:
-          GITHUB_TOKEN: {{secrets.GITHUB_TOKEN}}
