@@ -14,3 +14,4 @@ jobs:
         name: docker.pkg.github.com/piperswe/lake/lake
         username: piperswe
         password: ${{secrets.GITHUB_TOKEN}}
+        registry: docker.pkg.github.com
