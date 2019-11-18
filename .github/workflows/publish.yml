@@ -1,4 +1,4 @@
-name: deploy
+name: publish
 
 on:
   release:
@@ -13,7 +13,7 @@ jobs:
         run: lein with-profile test deps
       - name: Run tests
         run: lein test
-      - name: Deploy
+      - name: Publish to GitHub Package Registry
         run: lein deploy github || true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

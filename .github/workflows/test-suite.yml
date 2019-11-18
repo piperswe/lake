@@ -1,4 +1,4 @@
-name: test
+name: test-suite
 
 on: [push]
 
@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
-        run: lein deps
+        run: lein with-profile test deps
       - name: Run tests
         run: lein test

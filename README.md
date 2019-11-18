@@ -1,4 +1,4 @@
-# lake [![Actions Status](https://github.com/piperswe/lake/workflows/test/badge.svg)](https://github.com/piperswe/lake/actions)
+# lake [![Actions Status](https://github.com/piperswe/lake/workflows/test-suite/badge.svg)](https://github.com/piperswe/lake/actions)
 
 A Clojure library designed to ... well, that part is up to you.
 
