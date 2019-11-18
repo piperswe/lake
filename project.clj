@@ -2,7 +2,7 @@
   :description "Tower's data lake"
   :url "https://git.tower.piperswe.me/lake"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
-            :url "https://www.eclipse.org/legal/epl-2.0/"}
+            :url  "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/java.jdbc "0.7.10"]
                  [org.postgresql/postgresql "42.2.8.jre7"]
@@ -14,10 +14,10 @@
                  [potemkin "0.4.5"]
                  ; lake.mq
                  [overtone/at-at "1.2.0"]]
-  :deploy-repositories [["github" {:url "https://maven.pkg.github.com/piperswe"
-                                   :username "piperswe"
-                                   :password :env/github_token}]]
+  :repositories [["github" {:url      "https://maven.pkg.github.com/piperswe"
+                            :username "piperswe"
+                            :password :env/github_token}]]
   :repl-options {:init-ns lake.core}
   :main lake.core
   :profiles {:uberjar {:aot :all}
-             :test {:dependencies [[mockery "0.1.4"]]}})
+             :test    {:dependencies [[mockery "0.1.4"]]}})
