@@ -14,9 +14,9 @@
   (swap! db-queue conj insert))
 
 (defn flush-db-queue
-  [db-queue]
+  [db-queue db-conn]
   (let [[old-db-queue] (swap-vals! db-queue (fn [_] []))]
-    (j/insert-multi! (db/config)
+    (j/insert-multi! db-conn
                      :messages
                      old-db-queue)))
 
@@ -28,7 +28,7 @@
   [mq db-queue]
   (fn
     [channel & arguments]
-    (let [message {:timestamp (Timestamp. (System/currentTimeMillis))
+    (let [message {:timestamp (db/now)
                    :channel   (name channel)
                    :arguments (apply str (map char (t/write arguments)))}
           _ (add-to-db-queue db-queue message)
@@ -45,10 +45,14 @@
       result)))
 
 (defn -main
-  []
-  (let [mq (atom {})
-        db-queue (atom [])
-        at-at-pool (at/mk-pool)]
-    (at/every 5000 (partial flush-db-queue db-queue) at-at-pool)
-    (rpc/create-server {:push (push-command mq db-queue)
-                        :pop  (pop-command mq)})))
+  ([]
+   (j/with-db-connection
+     [db-conn (db/config)]
+     (-main db-conn)))
+  ([db-conn]
+   (let [mq (atom {})
+         db-queue (atom [])
+         at-at-pool (at/mk-pool)]
+     (at/every 5000 (partial flush-db-queue db-queue db-conn) at-at-pool)
+     (rpc/create-server {:push (push-command mq db-queue)
+                         :pop  (pop-command mq)}))))

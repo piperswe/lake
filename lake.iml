@@ -47,6 +47,7 @@
     <orderEntry type="library" name="Leiningen: javax.xml.bind/jaxb-api:2.3.0" level="project" />
     <orderEntry type="library" name="Leiningen: junit:4.8.2" level="project" />
     <orderEntry type="library" name="Leiningen: manifold:0.1.8" level="project" />
+    <orderEntry type="library" name="Leiningen: mockery:0.1.4" level="project" />
     <orderEntry type="library" name="Leiningen: nrepl:0.6.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.apache.ant/ant-launcher:1.8.1" level="project" />
     <orderEntry type="library" name="Leiningen: org.apache.ant/ant:1.8.1" level="project" />

@@ -1,4 +1,5 @@
-(ns lake.db)
+(ns lake.db
+  (:import (java.sql Timestamp)))
 
 (defn from-env
   [name default]
@@ -13,3 +14,7 @@
                  :user                  (from-env "DB_USER" "lake")
                  :password              (from-env "DB_PASSWORD" "lake")
                  :reWriteBatchedInserts true})))
+
+(defn now
+  []
+  (Timestamp. (System/currentTimeMillis)))

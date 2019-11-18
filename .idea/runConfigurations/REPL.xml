@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="REPL" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+    <module name="lake" />
+    <setting name="replType" value="NREPL" />
+    <setting name="execution" value="LEININGEN" />
+    <setting name="jvmArgs" value="" />
+    <setting name="parameters" value="" />
+    <setting name="workingDir" value="$PROJECT_DIR$" />
+    <setting name="profiles" value="base,dev,test" />
+    <setting name="aliases" value="" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -19,4 +19,5 @@
                                    :password :env/github_token}]]
   :repl-options {:init-ns lake.core}
   :main lake.core
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :test {:dependencies [[mockery "0.1.4"]]}})

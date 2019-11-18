@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="mq-server via core" type="ClojureScriptRunConfiguration" factoryName="Clojure Script">
+    <module name="lake" />
+    <setting name="path" value="" />
+    <setting name="namespace" value="lake.core" />
+    <setting name="execution" value="INTELLIJ" />
+    <setting name="profiles" value="" />
+    <setting name="aliases" value="" />
+    <setting name="vmparams" value="" />
+    <setting name="params" value="mq-server" />
+    <setting name="workDir" value="$PROJECT_DIR$" />
+    <env name="ENV" value="development" />
+    <method v="2" />
+  </configuration>
+</component>
