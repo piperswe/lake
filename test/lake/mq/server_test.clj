@@ -56,7 +56,7 @@
             :return 0}
          add {:target :lake.mq.server/add-to-db-queue}
          get-stream {:target :lake.mq.server/get-channel-stream
-            :return stream}]
+                     :return stream}]
         (let [command (push-command :mq :db-queue)
               first-message {:timestamp (Timestamp. 0)
                              :channel   :channel
@@ -65,10 +65,10 @@
                               :channel   :second-channel
                               :arguments `(:an-arg [:another #{:arg}])}
               expected-first-result {:timestamp 0
-                                     :channel (name (:channel first-message))
+                                     :channel   (name (:channel first-message))
                                      :arguments (->> first-message :arguments t/write (map char) (apply str))}
               expected-second-result {:timestamp 0
-                                      :channel (name (:channel second-message))
+                                      :channel   (name (:channel second-message))
                                       :arguments (->> second-message :arguments t/write (map char) (apply str))}
               first-result (apply command (conj (:arguments first-message) (:channel first-message)))
               second-result (apply command (conj (:arguments second-message) (:channel second-message)))]
@@ -78,3 +78,6 @@
           (is (= @(s/take! stream) (:arguments second-message)))
           (is (= (:call-args-list @add) `[(:db-queue ~expected-first-result) (:db-queue ~expected-second-result)]))
           (is (= (:call-args-list @get-stream) `[(:mq :channel) (:mq :second-channel)])))))))
+
+(deftest pop-command-test
+  )

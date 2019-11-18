@@ -20,7 +20,7 @@
               (d/catch Exception #(do
                                     (.printStackTrace %)
                                     {:status :error
-                                     :error %}))))))))
+                                     :error  %}))))))))
 
 (defn handle-command-data
   [handlers socket command]
