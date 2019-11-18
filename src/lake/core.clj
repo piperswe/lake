@@ -1,10 +1,12 @@
 (ns lake.core
   (:gen-class)
-  (:require [lake.mq.server :as mq-server]))
+  (:require [lake.mq.server :as mq-server]
+            [lake.archive.worker :as archive-worker]))
 
 (defn modules
   []
-  {:mq-server mq-server/-main})
+  {:mq-server      mq-server/-main
+   :archive-worker archive-worker/-main})
 
 (defn -main
   [module-name & args]

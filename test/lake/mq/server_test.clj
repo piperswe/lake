@@ -3,7 +3,8 @@
             [lake.mq.server :refer :all]
             [mockery.core :as m]
             [manifold.stream :as s]
-            [lake.rpc.transit :as t])
+            [lake.rpc.transit :as t]
+            [byte-streams :as bs])
   (:import (java.sql Timestamp)))
 
 (deftest add-to-db-queue-test
@@ -48,7 +49,7 @@
       (is (= @(s/take! (get-channel-stream mq :other-channel)) "other message"))
       (is (= @(s/take! (get-channel-stream mq :channel)) "message")))))
 
-(deftest push-command-test
+(deftest enqueue-command-test
   (testing "Adds commands to the DB queue and stream"
     (let [stream (s/stream)]
       (m/with-mocks
@@ -57,7 +58,7 @@
          add {:target :lake.mq.server/add-to-db-queue}
          get-stream {:target :lake.mq.server/get-channel-stream
                      :return stream}]
-        (let [command (push-command :mq :db-queue)
+        (let [command (enqueue-command :mq :db-queue)
               first-message {:timestamp (Timestamp. 0)
                              :channel   :channel
                              :arguments '(:arg1 :arg2)}
@@ -66,10 +67,10 @@
                               :arguments '(:an-arg [:another #{:arg}])}
               expected-first-result {:timestamp 0
                                      :channel   (name (:channel first-message))
-                                     :arguments (->> first-message :arguments t/write (map char) (apply str))}
+                                     :arguments (-> first-message :arguments t/write (bs/convert String))}
               expected-second-result {:timestamp 0
                                       :channel   (name (:channel second-message))
-                                      :arguments (->> second-message :arguments t/write (map char) (apply str))}
+                                      :arguments (-> second-message :arguments t/write (bs/convert String))}
               first-result (apply command (conj (:arguments first-message) (:channel first-message)))
               second-result (apply command (conj (:arguments second-message) (:channel second-message)))]
           (is (= first-result expected-first-result))
@@ -79,12 +80,12 @@
           (is (= (:call-args-list @add) `[(:db-queue ~expected-first-result) (:db-queue ~expected-second-result)]))
           (is (= (:call-args-list @get-stream) '[(:mq :channel) (:mq :second-channel)])))))))
 
-(deftest pop-command-test
+(deftest dequeue-command-test
   (let [stream (s/stream)]
     (m/with-mock mock
       {:target :lake.mq.server/get-channel-stream
        :return stream}
-      (let [command (pop-command :mq)
+      (let [command (dequeue-command :mq)
             first-message '(:arg1 :arg2)
             second-message '(:arg3 :arg4)]
         (testing "Gets existing messages from the queue"

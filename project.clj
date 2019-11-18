@@ -7,13 +7,19 @@
                  [org.clojure/java.jdbc "0.7.10"]
                  [org.postgresql/postgresql "42.2.8.jre7"]
                  [manifold "0.1.8"]
-                 ; lake.rpc
                  [aleph "0.4.6"]
+                 [byte-streams "0.2.4"]
+                 ; lake.rpc
                  [com.cognitect/transit-clj "0.8.319"]
                  [clj-html-compressor "0.1.1"]
                  [potemkin "0.4.5"]
                  ; lake.mq
-                 [overtone/at-at "1.2.0"]]
+                 [overtone/at-at "1.2.0"]
+                 ; lake.archive
+                 [cheshire "5.9.0"]
+                 [com.novemberain/pantomime "2.11.0"]
+                 [hickory "0.7.1"]
+                 [clojurewerkz/urly "1.0.0"]]
   :deploy-repositories {"github" {:url      "https://maven.pkg.github.com/piperswe"
                                   :username "piperswe"
                                   :password :env/github_token}}

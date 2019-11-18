@@ -1,13 +1,13 @@
 (ns lake.mq.server
   (:gen-class)
-  (:import (java.sql Timestamp))
   (:require [lake.rpc.server :as rpc]
             [lake.rpc.transit :as t]
             [lake.db :as db]
             [clojure.java.jdbc :as j]
             [overtone.at-at :as at]
             [manifold.stream :as s]
-            [manifold.deferred :as d]))
+            [manifold.deferred :as d]
+            [byte-streams :as bs]))
 
 (defn add-to-db-queue
   [db-queue insert]
@@ -24,19 +24,19 @@
   [mq channel]
   ((swap! mq #(assoc % channel (or (% channel) (s/stream)))) channel))
 
-(defn push-command
+(defn enqueue-command
   [mq db-queue]
   (fn
     [channel & arguments]
     (let [message {:timestamp (db/now)
                    :channel   (name channel)
-                   :arguments (apply str (map char (t/write arguments)))}
+                   :arguments (bs/convert (t/write arguments) String)}
           _ (add-to-db-queue db-queue message)
           stream (get-channel-stream mq channel)]
       (s/put! stream arguments)
       message)))
 
-(defn pop-command
+(defn dequeue-command
   [mq]
   (fn
     [channel]
@@ -54,5 +54,5 @@
          db-queue (atom [])
          at-at-pool (at/mk-pool)]
      (at/every 5000 (partial flush-db-queue db-queue db-conn) at-at-pool)
-     (rpc/create-server {:push (push-command mq db-queue)
-                         :pop  (pop-command mq)}))))
+     (rpc/create-server {:enqueue (enqueue-command mq db-queue)
+                         :dequeue (dequeue-command mq)}))))
