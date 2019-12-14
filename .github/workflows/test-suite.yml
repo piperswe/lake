@@ -19,6 +19,8 @@ jobs:
         with:
           name: lake-standalone.jar
           path: target/lake-0.1.0-SNAPSHOT-standalone.jar
+      - name: Build war
+        run: lein uberwar
       - uses: actions/upload-artifact@v1
         with:
           name: lake-standalone.war
