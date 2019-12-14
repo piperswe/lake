@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://tower:5432/lake</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Lake @ local" uuid="5668d66f-fcd7-4b6d-8c7f-945ea0e877f1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/lake</jdbc-url>
+    </data-source>
   </component>
 </project>

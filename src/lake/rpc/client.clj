@@ -24,6 +24,7 @@
                        id (:id response)
                        outstanding-request (@outstanding-requests id)]
                    (swap! outstanding-requests fulfill-outstanding-request id)
+                   (println "rpc call return")
                    (case (:status response)
                      :success
                      (d/success! outstanding-request (:result response))
@@ -42,6 +43,7 @@
                  conn (:conn client)
                  outstanding-requests (:outstanding-requests client)
                  id (.toString (UUID/randomUUID))
+                 _ (println (format "rpc call %s" name))
                  _ (s/put! conn (t/write {:id      id
                                           :command (concat (conj args name))}))
                  result {:deferred (d/deferred)}

@@ -9,6 +9,9 @@
     <setting name="vmparams" value="" />
     <setting name="params" value="" />
     <setting name="workDir" value="$PROJECT_DIR$" />
+    <env name="DB_HOST" value="tower" />
+    <env name="DB_PASSWORD" value="postgres" />
+    <env name="DB_USER" value="postgres" />
     <method v="2" />
   </configuration>
 </component>

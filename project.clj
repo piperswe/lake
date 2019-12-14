@@ -6,9 +6,12 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/java.jdbc "0.7.10"]
                  [org.postgresql/postgresql "42.2.8.jre7"]
+                 [drift "1.5.3"]
                  [manifold "0.1.8"]
                  [aleph "0.4.6"]
                  [byte-streams "0.2.4"]
+                 ; lake.kubernetes
+                 [clj-commons/clj-yaml "0.7.0"]
                  ; lake.rpc
                  [com.cognitect/transit-clj "0.8.319"]
                  [clj-html-compressor "0.1.1"]
@@ -31,7 +34,8 @@
   :deploy-repositories {"github" {:url      "https://maven.pkg.github.com/piperswe"
                                   :username "piperswe"
                                   :password :env/github_token}}
-  :repl-options {:init-ns lake.core}
+  :repl-options {:init-ns lake.user}
   :main lake.core
-  :profiles {:uberjar {:aot :all}
+  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.3.1"]]}
+             :uberjar {:aot :all}
              :test    {:dependencies [[mockery "0.1.4"]]}})

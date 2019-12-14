@@ -53,7 +53,7 @@
   (testing "Adds commands to the DB queue and stream"
     (let [stream (s/stream)]
       (m/with-mocks
-        [_ {:target :lake.db/now
+        [_ {:target :lake.db.core/now
             :return 0}
          add {:target :lake.mq.server/add-to-db-queue}
          get-stream {:target :lake.mq.server/get-channel-stream
