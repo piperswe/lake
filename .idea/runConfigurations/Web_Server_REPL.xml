@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Web Server REPL" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
+    <module name="lake" />
+    <setting name="host" value="localhost" />
+    <setting name="port" value="59258" />
+    <setting name="replType" value="1" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WAR" type="LeiningenRunConfiguration" factoryName="Leiningen">
+    <module name="lake" />
+    <arguments argument="ring" />
+    <arguments argument="uberwar" />
+    <setting name="profiles" value="" />
+    <setting name="trampoline" value="false" />
+    <method v="2" />
+  </configuration>
+</component>

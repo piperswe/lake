@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="JAR" type="LeiningenRunConfiguration" factoryName="Leiningen">
+    <module name="lake" />
+    <arguments argument="uberjar" />
+    <setting name="profiles" value="" />
+    <setting name="trampoline" value="false" />
+    <method v="2" />
+  </configuration>
+</component>

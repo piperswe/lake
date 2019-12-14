@@ -19,7 +19,15 @@
                  [cheshire "5.9.0"]
                  [com.novemberain/pantomime "2.11.0"]
                  [hickory "0.7.1"]
-                 [clojurewerkz/urly "1.0.0"]]
+                 [clojurewerkz/urly "1.0.0"]
+                 ; lake.web
+                 [ring "1.8.0"]
+                 [compojure "1.6.1"]
+                 ; lake.email
+                 [io.forward/clojure-mail "1.0.8"]]
+  :plugins [[lein-ring "0.12.5"]]
+  :ring {:handler lake.web.server/app
+         :nrepl {:start? true}}
   :deploy-repositories {"github" {:url      "https://maven.pkg.github.com/piperswe"
                                   :username "piperswe"
                                   :password :env/github_token}}

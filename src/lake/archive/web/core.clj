@@ -17,7 +17,7 @@
       (str host path))))
 
 (defn archive
-  [{:keys [enqueue]} url]
+  [{:keys [enqueue] :as client} url]
   (d/let-flow [res (http/get url {:headers {"User-Agent" "https://github.com/piperswe/lake"}})
                ba-res (assoc res :body (bs/to-byte-array (:body res)))
                content-type (mt/base-type ((:headers ba-res) "content-type"))

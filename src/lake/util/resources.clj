@@ -11,9 +11,13 @@
   [ns name extension]
   (slurp (io/resource (get-resource-name ns name extension))))
 
+(defmacro get-resource-rt
+  [name extension]
+  `(get-resource-for-ns *ns* ~name ~extension))
+
 (defmacro get-resource
   [name extension]
-  (get-resource-for-ns *ns* name extension))
+  (get-resource-rt name extension))
 
 (defmacro get-html-resource
   ([name]
