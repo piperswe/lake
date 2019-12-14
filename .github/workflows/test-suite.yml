@@ -8,12 +8,26 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
-        run: lein with-profile test deps
+        run: lein deps
       - name: Build jar
         run: lein uberjar
       - uses: actions/upload-artifact@v1
         with:
+          name: lake.jar
+          path: target/lake-0.1.0-SNAPSHOT.jar
+      - uses: actions/upload-artifact@v1
+        with:
           name: lake-standalone.jar
-          path: target/lake-*-standalone.jar
+          path: target/lake-0.1.0-SNAPSHOT-standalone.jar
+      - uses: actions/upload-artifact@v1
+        with:
+          name: lake-standalone.war
+          path: target/lake-0.1.0-SNAPSHOT-standalone.war
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: lein with-profile test deps
       - name: Run tests
         run: lein test
