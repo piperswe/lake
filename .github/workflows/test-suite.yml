@@ -9,11 +9,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: lein with-profile test deps
-      - name: Run tests
-        run: lein test
       - name: Build jar
         run: lein uberjar
       - uses: actions/upload-artifact@v1
         with:
           name: lake-standalone.jar
           path: target/lake-*-standalone.jar
+      - name: Run tests
+        run: lein test
